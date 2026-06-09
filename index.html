@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Currículo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Gerador de Currículo</h1>
+
+  <form id="form">
+    <input type="text" id="nome" placeholder="Nome completo">
+    <input type="text" id="profissao" placeholder="Profissão">
+    <textarea id="descricao" placeholder="Resumo profissional"></textarea>
+
+    <h3>Experiências</h3>
+    <textarea id="experiencias" placeholder="Descreva suas experiências profissionais"></textarea>
+
+    <h3>Habilidades</h3>
+    <textarea id="habilidades" placeholder="Liste suas habilidades"></textarea>
+
+    <button type="button" onclick="gerar()">Gerar Currículo</button>
+  </form>
+
+  <div id="resultado"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
