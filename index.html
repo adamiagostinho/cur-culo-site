@@ -3,21 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currículo – Editável</title>
+    <title>Currículo Social Profissional</title>
 
     <link rel="stylesheet" href="estilo.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
     <header>
-        <h1>Currículo Profissional – Editável</h1>
+        <div class="foto-container">
+            <img id="foto-perfil" src="https://via.placeholder.com/180" alt="Foto do aluno">
+            <input type="file" id="input-foto" accept="image/*" style="display:none;">
+            <button class="btn-foto" onclick="document.getElementById('input-foto').click();">
+                Trocar foto
+            </button>
+        </div>
+
+        <h1>Currículo Profissional</h1>
 
         <nav>
             <button class="tab-btn" data-tab="sobre">Sobre</button>
+            <button class="tab-btn" data-tab="objetivo">Objetivo</button>
             <button class="tab-btn" data-tab="experiencia">Experiência</button>
             <button class="tab-btn" data-tab="formacao">Formação</button>
             <button class="tab-btn" data-tab="habilidades">Habilidades</button>
+            <button class="tab-btn" data-tab="socioemocionais">Socioemocionais</button>
+            <button class="tab-btn" data-tab="valores">Valores</button>
+            <button class="tab-btn" data-tab="superacao">Superação</button>
+            <button class="tab-btn" data-tab="responsabilidades">Responsabilidades</button>
             <button class="tab-btn" data-tab="portfolio">Portfólio</button>
         </nav>
     </header>
@@ -28,32 +42,66 @@
 
         <section id="sobre" class="tab-content active">
             <h2>Sobre mim</h2>
-            <textarea class="editable">Escreva aqui um resumo profissional atraente.</textarea>
+            <textarea class="editable">Escreva aqui um resumo profissional acolhedor e verdadeiro.</textarea>
+        </section>
+
+        <section id="objetivo" class="tab-content">
+            <h2>Objetivo Profissional</h2>
+            <textarea class="editable">Descreva aqui o tipo de vaga ou área que deseja atuar.</textarea>
         </section>
 
         <section id="experiencia" class="tab-content">
             <h2>Experiência</h2>
-            <textarea class="editable">Liste suas experiências profissionais.</textarea>
+            <textarea class="editable">Liste suas experiências profissionais, formais ou informais.</textarea>
         </section>
 
         <section id="formacao" class="tab-content">
             <h2>Formação</h2>
-            <textarea class="editable">Adicione seus cursos e certificações.</textarea>
+            <textarea class="editable">Adicione seus cursos, formações e certificações.</textarea>
         </section>
 
         <section id="habilidades" class="tab-content">
-            <h2>Habilidades</h2>
-            <textarea class="editable">Liste suas competências técnicas e comportamentais.</textarea>
+            <h2>Habilidades Técnicas</h2>
+            <textarea class="editable">Liste suas competências técnicas e conhecimentos específicos.</textarea>
+        </section>
+
+        <section id="socioemocionais" class="tab-content">
+            <h2>Habilidades Socioemocionais</h2>
+            <textarea class="editable">Exemplos: empatia, comunicação, organização, resiliência, colaboração.</textarea>
+        </section>
+
+        <section id="valores" class="tab-content">
+            <h2>Valores Pessoais</h2>
+            <textarea class="editable">Exemplos: ética, respeito, responsabilidade, compromisso.</textarea>
+        </section>
+
+        <section id="superacao" class="tab-content">
+            <h2>Histórias de Superação</h2>
+            <textarea class="editable">Conte uma situação difícil que enfrentou e como superou.</textarea>
+        </section>
+
+        <section id="responsabilidades" class="tab-content">
+            <h2>Responsabilidades Fora da Escola</h2>
+            <textarea class="editable">Exemplos: cuidar de irmãos, ajudar no comércio da família, tarefas domésticas.</textarea>
         </section>
 
         <section id="portfolio" class="tab-content">
             <h2>Portfólio</h2>
-            <textarea class="editable">Links, imagens ou projetos desenvolvidos.</textarea>
+            <textarea class="editable">Links, projetos, atividades ou trabalhos realizados.</textarea>
         </section>
 
     </main>
 
     <script>
+        // Trocar foto
+        document.getElementById("input-foto").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("foto-perfil").src = URL.createObjectURL(file);
+            }
+        });
+
+        // Abas
         const buttons = document.querySelectorAll(".tab-btn");
         const contents = document.querySelectorAll(".tab-content");
 
