@@ -1,29 +1,42 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Gerador de Currículo</title>
-  <link rel="stylesheet" href="style.css">
-</head>
 <body>
-  <h1>Gerador de Currículo</h1>
+    <header>
+        <h1>Agostinho – Currículo Profissional</h1>
 
-  <form id="form">
-    <input type="text" id="nome" placeholder="Nome completo">
-    <input type="text" id="profissao" placeholder="Profissão">
-    <textarea id="descricao" placeholder="Resumo profissional"></textarea>
+        <nav>
+            <button class="tab-btn" data-tab="sobre">Sobre</button>
+            <button class="tab-btn" data-tab="experiencia">Experiência</button>
+            <button class="tab-btn" data-tab="formacao">Formação</button>
+            <button class="tab-btn" data-tab="habilidades">Habilidades</button>
+            <button class="tab-btn" data-tab="portfolio">Portfólio</button>
+        </nav>
+    </header>
 
-    <h3>Experiências</h3>
-    <textarea id="experiencias" placeholder="Descreva suas experiências profissionais"></textarea>
+    <button onclick="window.print()" class="btn-print">Imprimir Currículo</button>
 
-    <h3>Habilidades</h3>
-    <textarea id="habilidades" placeholder="Liste suas habilidades"></textarea>
+    <main>
+        <section id="sobre" class="tab-content active">
+            <h2>Sobre mim</h2>
+            <p>Escreva aqui um resumo profissional atraente.</p>
+        </section>
 
-    <button type="button" onclick="gerar()">Gerar Currículo</button>
-  </form>
+        <section id="experiencia" class="tab-content">
+            <h2>Experiência</h2>
+            <p>Liste suas experiências profissionais.</p>
+        </section>
 
-  <div id="resultado"></div>
+        <section id="formacao" class="tab-content">
+            <h2>Formação</h2>
+            <p>Adicione seus cursos e certificações.</p>
+        </section>
 
-  <script src="script.js"></script>
+        <section id="habilidades" class="tab-content">
+            <h2>Habilidades</h2>
+            <p>Liste suas competências técnicas e comportamentais.</p>
+        </section>
+
+        <section id="portfolio" class="tab-content">
+            <h2>Portfólio</h2>
+            <p>Links, imagens ou projetos desenvolvidos.</p>
+        </section>
+    </main>
 </body>
-</html>
