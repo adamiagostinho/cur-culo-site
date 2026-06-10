@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currículo – Agostinho</title>
+    <title>Currículo – Editável</title>
 
-    <!-- Link para o CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="estilo.css">
 
-    <!-- Fonte Poppins -->
+    <!-- Fonte -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
-        <h1>Agostinho – Currículo Profissional</h1>
+        <h1>Currículo Profissional – Editável</h1>
 
         <nav>
             <button class="tab-btn" data-tab="sobre">Sobre</button>
@@ -28,33 +28,58 @@
     <button onclick="window.print()" class="btn-print">Imprimir Currículo</button>
 
     <main>
+
         <section id="sobre" class="tab-content active">
             <h2>Sobre mim</h2>
-            <p>Escreva aqui um resumo profissional atraente.</p>
+            <div contenteditable="true" class="editable">
+                Escreva aqui um resumo profissional atraente.
+            </div>
         </section>
 
         <section id="experiencia" class="tab-content">
             <h2>Experiência</h2>
-            <p>Liste suas experiências profissionais.</p>
+            <div contenteditable="true" class="editable">
+                Liste suas experiências profissionais.
+            </div>
         </section>
 
         <section id="formacao" class="tab-content">
             <h2>Formação</h2>
-            <p>Adicione seus cursos e certificações.</p>
+            <div contenteditable="true" class="editable">
+                Adicione seus cursos e certificações.
+            </div>
         </section>
 
         <section id="habilidades" class="tab-content">
             <h2>Habilidades</h2>
-            <p>Liste suas competências técnicas e comportamentais.</p>
+            <div contenteditable="true" class="editable">
+                Liste suas competências técnicas e comportamentais.
+            </div>
         </section>
 
         <section id="portfolio" class="tab-content">
             <h2>Portfólio</h2>
-            <p>Links, imagens ou projetos desenvolvidos.</p>
+            <div contenteditable="true" class="editable">
+                Links, imagens ou projetos desenvolvidos.
+            </div>
         </section>
+
     </main>
 
-    <!-- Link para o JavaScript -->
-    <script src="script.js"></script>
+    <!-- JavaScript -->
+    <script>
+        const buttons = document.querySelectorAll(".tab-btn");
+        const contents = document.querySelectorAll(".tab-content");
+
+        buttons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const tab = btn.getAttribute("data-tab");
+
+                contents.forEach(c => c.classList.remove("active"));
+                document.getElementById(tab).classList.add("active");
+            });
+        });
+    </script>
+
 </body>
 </html>
