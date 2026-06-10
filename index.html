@@ -61,78 +61,92 @@
         </nav>
     </header>
 
-    <button onclick="window.print()" class="btn-print">Imprimir Currículo</button>
+    <div class="toolbar">
+        <button data-cmd="bold"><strong>B</strong></button>
+        <button data-cmd="italic"><em>I</em></button>
+        <button data-cmd="underline"><u>U</u></button>
+        <button data-cmd="insertUnorderedList">• Lista</button>
+        <button data-cmd="insertOrderedList">1. Lista</button>
+        <button data-cmd="justifyLeft">⟸</button>
+        <button data-cmd="justifyCenter">⇔</button>
+        <button data-cmd="justifyRight">⟹</button>
+        <button data-cmd="createLink">🔗 Link</button>
+        <button data-cmd="removeFormat">✖ Formatação</button>
+        <button data-cmd="h2">Título</button>
+    </div>
+
+    <button onclick="abrirImpressao()" class="btn-print">Imprimir versão completa</button>
 
     <main>
 
         <section id="sobre" class="tab-content active">
             <h2>Sobre mim</h2>
-            <textarea class="editable" data-field="sobre">
-Escreva aqui um resumo profissional acolhedor e verdadeiro.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="sobre">
+                Escreva aqui um resumo profissional acolhedor e verdadeiro.
+            </div>
         </section>
 
         <section id="objetivo" class="tab-content">
             <h2>Objetivo Profissional</h2>
-            <textarea class="editable" data-field="objetivo">
-Descreva aqui o tipo de vaga ou área que deseja atuar.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="objetivo">
+                Descreva aqui o tipo de vaga ou área que deseja atuar.
+            </div>
         </section>
 
         <section id="experiencia" class="tab-content">
             <h2>Experiência</h2>
-            <textarea class="editable" data-field="experiencia">
-Liste suas experiências profissionais, formais ou informais.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="experiencia">
+                Liste suas experiências profissionais, formais ou informais.
+            </div>
         </section>
 
         <section id="formacao" class="tab-content">
             <h2>Formação</h2>
-            <textarea class="editable" data-field="formacao">
-Adicione seus cursos, formações e certificações.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="formacao">
+                Adicione seus cursos, formações e certificações.
+            </div>
         </section>
 
         <section id="habilidades" class="tab-content">
             <h2>Habilidades Técnicas</h2>
-            <textarea class="editable" data-field="habilidades">
-Liste suas competências técnicas e conhecimentos específicos.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="habilidades">
+                Liste suas competências técnicas e conhecimentos específicos.
+            </div>
         </section>
 
         <section id="socioemocionais" class="tab-content">
             <h2>Habilidades Socioemocionais</h2>
-            <textarea class="editable" data-field="socioemocionais">
-Exemplos: empatia, comunicação, organização, resiliência, colaboração.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="socioemocionais">
+                Exemplos: empatia, comunicação, organização, resiliência, colaboração.
+            </div>
         </section>
 
         <section id="valores" class="tab-content">
             <h2>Valores Pessoais</h2>
-            <textarea class="editable" data-field="valores">
-Exemplos: ética, respeito, responsabilidade, compromisso.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="valores">
+                Exemplos: ética, respeito, responsabilidade, compromisso.
+            </div>
         </section>
 
         <section id="superacao" class="tab-content">
             <h2>Histórias de Superação</h2>
-            <textarea class="editable" data-field="superacao">
-Conte uma situação difícil que enfrentou e como superou.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="superacao">
+                Conte uma situação difícil que enfrentou e como superou.
+            </div>
         </section>
 
         <section id="responsabilidades" class="tab-content">
             <h2>Responsabilidades Fora da Escola</h2>
-            <textarea class="editable" data-field="responsabilidades">
-Exemplos: cuidar de irmãos, ajudar no comércio da família, tarefas domésticas.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="responsabilidades">
+                Exemplos: cuidar de irmãos, ajudar no comércio da família, tarefas domésticas.
+            </div>
         </section>
 
         <section id="portfolio" class="tab-content">
             <h2>Portfólio</h2>
-            <textarea class="editable" data-field="portfolio">
-Links, projetos, atividades ou trabalhos realizados.
-            </textarea>
+            <div class="editor" contenteditable="true" data-field="portfolio">
+                Links, projetos, atividades ou trabalhos realizados.
+            </div>
         </section>
 
     </main>
@@ -195,25 +209,52 @@ Links, projetos, atividades ou trabalhos realizados.
             });
         });
 
-        const campos = document.querySelectorAll(".editable");
-        campos.forEach(campo => {
-            campo.addEventListener("input", () => {
-                const key = campo.getAttribute("data-field");
-                localStorage.setItem(STORAGE_PREFIX + key, campo.value);
+        const editors = document.querySelectorAll(".editor");
+        let editorAtivo = null;
+
+        editors.forEach(editor => {
+            editor.addEventListener("focus", () => {
+                editorAtivo = editor;
+            });
+            editor.addEventListener("input", () => {
+                const key = editor.getAttribute("data-field");
+                localStorage.setItem(STORAGE_PREFIX + key, editor.innerHTML);
+            });
+        });
+
+        const toolbarButtons = document.querySelectorAll(".toolbar button");
+        toolbarButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                if (!editorAtivo) return;
+                const cmd = btn.getAttribute("data-cmd");
+                if (cmd === "createLink") {
+                    const url = prompt("Digite o link:");
+                    if (url) document.execCommand("createLink", false, url);
+                } else if (cmd === "h2") {
+                    document.execCommand("formatBlock", false, "h2");
+                } else {
+                    document.execCommand(cmd, false, null);
+                }
+                const key = editorAtivo.getAttribute("data-field");
+                localStorage.setItem(STORAGE_PREFIX + key, editorAtivo.innerHTML);
             });
         });
 
         function carregarCurriculo() {
-            campos.forEach(campo => {
-                const key = campo.getAttribute("data-field");
+            editors.forEach(editor => {
+                const key = editor.getAttribute("data-field");
                 const valor = localStorage.getItem(STORAGE_PREFIX + key);
-                if (valor !== null) campo.value = valor;
+                if (valor !== null) editor.innerHTML = valor;
             });
 
             const fotoSalva = localStorage.getItem(STORAGE_PREFIX + "foto");
             if (fotoSalva) {
                 document.getElementById("foto-perfil").src = fotoSalva;
             }
+        }
+
+        function abrirImpressao() {
+            window.open("print.html", "_blank");
         }
     </script>
 
