@@ -61,6 +61,7 @@
         </nav>
     </header>
 
+    <!-- BARRA DE FERRAMENTAS DO EDITOR RICO -->
     <div class="toolbar">
         <button data-cmd="bold"><strong>B</strong></button>
         <button data-cmd="italic"><em>I</em></button>
@@ -79,6 +80,7 @@
 
     <main>
 
+        <!-- SEÇÕES DO CURRÍCULO -->
         <section id="sobre" class="tab-content active">
             <h2>Sobre mim</h2>
             <div class="editor" contenteditable="true" data-field="sobre">
@@ -154,6 +156,7 @@
     <script>
         const STORAGE_PREFIX = "curriculo_social_";
 
+        /* LOGIN */
         const senhaSalva = localStorage.getItem(STORAGE_PREFIX + "senha");
         const loginCriar = document.getElementById("login-criar");
         const loginEntrar = document.getElementById("login-entrar");
@@ -189,6 +192,7 @@
             }
         });
 
+        /* FOTO */
         document.getElementById("input-foto").addEventListener("change", function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -198,6 +202,7 @@
             }
         });
 
+        /* ABAS */
         const buttons = document.querySelectorAll(".tab-btn");
         const contents = document.querySelectorAll(".tab-content");
 
@@ -209,6 +214,7 @@
             });
         });
 
+        /* EDITOR RICO */
         const editors = document.querySelectorAll(".editor");
         let editorAtivo = null;
 
@@ -227,19 +233,49 @@
             btn.addEventListener("click", () => {
                 if (!editorAtivo) return;
                 const cmd = btn.getAttribute("data-cmd");
+
+                /* CORREÇÃO DO BOTÃO DE LINK */
                 if (cmd === "createLink") {
-                    const url = prompt("Digite o link:");
-                    if (url) document.execCommand("createLink", false, url);
-                } else if (cmd === "h2") {
+                    const url = prompt("Digite o link (ex: https://www.google.com):");
+
+                    if (url) {
+                        editorAtivo.focus();
+                        const selection = document.getSelection();
+
+                        if (!selection || selection.toString().length === 0) {
+                            document.execCommand(
+                                "insertHTML",
+                                false,
+                                `<a href="${url}" target="_blank">${url}</a>`
+                            );
+                        } else {
+                            document.execCommand("createLink", false, url);
+
+                            const anchors = editorAtivo.querySelectorAll("a");
+                            anchors.forEach(a => a.setAttribute("target", "_blank"));
+                        }
+
+                        const key = editorAtivo.getAttribute("data-field");
+                        localStorage.setItem(STORAGE_PREFIX + key, editorAtivo.innerHTML);
+                    }
+                }
+
+                /* TÍTULO */
+                else if (cmd === "h2") {
                     document.execCommand("formatBlock", false, "h2");
-                } else {
+                }
+
+                /* OUTROS COMANDOS */
+                else {
                     document.execCommand(cmd, false, null);
                 }
+
                 const key = editorAtivo.getAttribute("data-field");
                 localStorage.setItem(STORAGE_PREFIX + key, editorAtivo.innerHTML);
             });
         });
 
+        /* CARREGAR DADOS */
         function carregarCurriculo() {
             editors.forEach(editor => {
                 const key = editor.getAttribute("data-field");
@@ -253,6 +289,7 @@
             }
         }
 
+        /* IMPRESSÃO PREMIUM */
         function abrirImpressao() {
             window.open("print.html", "_blank");
         }
