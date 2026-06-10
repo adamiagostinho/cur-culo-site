@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currículo – Editável</title>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="estilo.css">
-
-    <!-- Fonte -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 
@@ -31,42 +28,31 @@
 
         <section id="sobre" class="tab-content active">
             <h2>Sobre mim</h2>
-            <div contenteditable="true" class="editable">
-                Escreva aqui um resumo profissional atraente.
-            </div>
+            <textarea class="editable">Escreva aqui um resumo profissional atraente.</textarea>
         </section>
 
         <section id="experiencia" class="tab-content">
             <h2>Experiência</h2>
-            <div contenteditable="true" class="editable">
-                Liste suas experiências profissionais.
-            </div>
+            <textarea class="editable">Liste suas experiências profissionais.</textarea>
         </section>
 
         <section id="formacao" class="tab-content">
             <h2>Formação</h2>
-            <div contenteditable="true" class="editable">
-                Adicione seus cursos e certificações.
-            </div>
+            <textarea class="editable">Adicione seus cursos e certificações.</textarea>
         </section>
 
         <section id="habilidades" class="tab-content">
             <h2>Habilidades</h2>
-            <div contenteditable="true" class="editable">
-                Liste suas competências técnicas e comportamentais.
-            </div>
+            <textarea class="editable">Liste suas competências técnicas e comportamentais.</textarea>
         </section>
 
         <section id="portfolio" class="tab-content">
             <h2>Portfólio</h2>
-            <div contenteditable="true" class="editable">
-                Links, imagens ou projetos desenvolvidos.
-            </div>
+            <textarea class="editable">Links, imagens ou projetos desenvolvidos.</textarea>
         </section>
 
     </main>
 
-    <!-- JavaScript -->
     <script>
         const buttons = document.querySelectorAll(".tab-btn");
         const contents = document.querySelectorAll(".tab-content");
