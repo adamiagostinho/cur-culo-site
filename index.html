@@ -11,6 +11,31 @@
 
 <body>
 
+    <!-- TELA DE SENHA / BOAS-VINDAS -->
+    <div id="login-overlay">
+        <div class="login-card">
+            <h1>Bem-vindo ao seu currículo</h1>
+            <p>
+                Olá! Que bom ter você aqui.<br>
+                Vamos acessar seu currículo e continuar construindo seu futuro.
+            </p>
+
+            <div id="login-criar">
+                <h2>Criar senha</h2>
+                <input type="password" id="nova-senha" placeholder="Digite uma nova senha">
+                <input type="password" id="confirmar-senha" placeholder="Confirme a senha">
+                <button id="btn-criar-senha">Criar e entrar</button>
+            </div>
+
+            <div id="login-entrar" style="display:none;">
+                <h2>Digite sua senha</h2>
+                <input type="password" id="senha-login" placeholder="Sua senha">
+                <button id="btn-entrar">Entrar</button>
+                <p id="erro-senha" class="erro-msg"></p>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="foto-container">
             <img id="foto-perfil" src="https://via.placeholder.com/180" alt="Foto do aluno">
@@ -42,77 +67,154 @@
 
         <section id="sobre" class="tab-content active">
             <h2>Sobre mim</h2>
-            <textarea class="editable">Escreva aqui um resumo profissional acolhedor e verdadeiro.</textarea>
+            <textarea class="editable" data-field="sobre">
+Escreva aqui um resumo profissional acolhedor e verdadeiro.
+            </textarea>
         </section>
 
         <section id="objetivo" class="tab-content">
             <h2>Objetivo Profissional</h2>
-            <textarea class="editable">Descreva aqui o tipo de vaga ou área que deseja atuar.</textarea>
+            <textarea class="editable" data-field="objetivo">
+Descreva aqui o tipo de vaga ou área que deseja atuar.
+            </textarea>
         </section>
 
         <section id="experiencia" class="tab-content">
             <h2>Experiência</h2>
-            <textarea class="editable">Liste suas experiências profissionais, formais ou informais.</textarea>
+            <textarea class="editable" data-field="experiencia">
+Liste suas experiências profissionais, formais ou informais.
+            </textarea>
         </section>
 
         <section id="formacao" class="tab-content">
             <h2>Formação</h2>
-            <textarea class="editable">Adicione seus cursos, formações e certificações.</textarea>
+            <textarea class="editable" data-field="formacao">
+Adicione seus cursos, formações e certificações.
+            </textarea>
         </section>
 
         <section id="habilidades" class="tab-content">
             <h2>Habilidades Técnicas</h2>
-            <textarea class="editable">Liste suas competências técnicas e conhecimentos específicos.</textarea>
+            <textarea class="editable" data-field="habilidades">
+Liste suas competências técnicas e conhecimentos específicos.
+            </textarea>
         </section>
 
         <section id="socioemocionais" class="tab-content">
             <h2>Habilidades Socioemocionais</h2>
-            <textarea class="editable">Exemplos: empatia, comunicação, organização, resiliência, colaboração.</textarea>
+            <textarea class="editable" data-field="socioemocionais">
+Exemplos: empatia, comunicação, organização, resiliência, colaboração.
+            </textarea>
         </section>
 
         <section id="valores" class="tab-content">
             <h2>Valores Pessoais</h2>
-            <textarea class="editable">Exemplos: ética, respeito, responsabilidade, compromisso.</textarea>
+            <textarea class="editable" data-field="valores">
+Exemplos: ética, respeito, responsabilidade, compromisso.
+            </textarea>
         </section>
 
         <section id="superacao" class="tab-content">
             <h2>Histórias de Superação</h2>
-            <textarea class="editable">Conte uma situação difícil que enfrentou e como superou.</textarea>
+            <textarea class="editable" data-field="superacao">
+Conte uma situação difícil que enfrentou e como superou.
+            </textarea>
         </section>
 
         <section id="responsabilidades" class="tab-content">
             <h2>Responsabilidades Fora da Escola</h2>
-            <textarea class="editable">Exemplos: cuidar de irmãos, ajudar no comércio da família, tarefas domésticas.</textarea>
+            <textarea class="editable" data-field="responsabilidades">
+Exemplos: cuidar de irmãos, ajudar no comércio da família, tarefas domésticas.
+            </textarea>
         </section>
 
         <section id="portfolio" class="tab-content">
             <h2>Portfólio</h2>
-            <textarea class="editable">Links, projetos, atividades ou trabalhos realizados.</textarea>
+            <textarea class="editable" data-field="portfolio">
+Links, projetos, atividades ou trabalhos realizados.
+            </textarea>
         </section>
 
     </main>
 
     <script>
-        // Trocar foto
-        document.getElementById("input-foto").addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById("foto-perfil").src = URL.createObjectURL(file);
+        const STORAGE_PREFIX = "curriculo_social_";
+
+        const senhaSalva = localStorage.getItem(STORAGE_PREFIX + "senha");
+        const loginCriar = document.getElementById("login-criar");
+        const loginEntrar = document.getElementById("login-entrar");
+        const overlay = document.getElementById("login-overlay");
+
+        if (senhaSalva) {
+            loginCriar.style.display = "none";
+            loginEntrar.style.display = "block";
+        }
+
+        document.getElementById("btn-criar-senha").addEventListener("click", () => {
+            const nova = document.getElementById("nova-senha").value;
+            const conf = document.getElementById("confirmar-senha").value;
+
+            if (!nova || !conf) return alert("Preencha os dois campos de senha.");
+            if (nova !== conf) return alert("As senhas não coincidem.");
+
+            localStorage.setItem(STORAGE_PREFIX + "senha", nova);
+            overlay.style.display = "none";
+            carregarCurriculo();
+        });
+
+        document.getElementById("btn-entrar").addEventListener("click", () => {
+            const senhaDigitada = document.getElementById("senha-login").value;
+            const erro = document.getElementById("erro-senha");
+
+            if (senhaDigitada === senhaSalva) {
+                erro.textContent = "";
+                overlay.style.display = "none";
+                carregarCurriculo();
+            } else {
+                erro.textContent = "Senha incorreta. Tente novamente.";
             }
         });
 
-        // Abas
+        document.getElementById("input-foto").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                document.getElementById("foto-perfil").src = url;
+                localStorage.setItem(STORAGE_PREFIX + "foto", url);
+            }
+        });
+
         const buttons = document.querySelectorAll(".tab-btn");
         const contents = document.querySelectorAll(".tab-content");
 
         buttons.forEach(btn => {
             btn.addEventListener("click", () => {
                 const tab = btn.getAttribute("data-tab");
-
                 contents.forEach(c => c.classList.remove("active"));
                 document.getElementById(tab).classList.add("active");
             });
         });
+
+        const campos = document.querySelectorAll(".editable");
+        campos.forEach(campo => {
+            campo.addEventListener("input", () => {
+                const key = campo.getAttribute("data-field");
+                localStorage.setItem(STORAGE_PREFIX + key, campo.value);
+            });
+        });
+
+        function carregarCurriculo() {
+            campos.forEach(campo => {
+                const key = campo.getAttribute("data-field");
+                const valor = localStorage.getItem(STORAGE_PREFIX + key);
+                if (valor !== null) campo.value = valor;
+            });
+
+            const fotoSalva = localStorage.getItem(STORAGE_PREFIX + "foto");
+            if (fotoSalva) {
+                document.getElementById("foto-perfil").src = fotoSalva;
+            }
+        }
     </script>
 
 </body>
