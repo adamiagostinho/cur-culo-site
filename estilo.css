@@ -122,6 +122,37 @@ nav button:hover {
     background: #4f7a7a;
 }
 
+/* BARRA DE FERRAMENTAS (EDITOR RICO) */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    padding: 10px 20px;
+    background: #e2e8f0;
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.toolbar button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.toolbar button strong,
+.toolbar button em,
+.toolbar button u {
+    font-size: 14px;
+}
+
+.toolbar button:hover {
+    background: #2563eb;
+}
+
 /* BOTÃO IMPRIMIR */
 .btn-print {
     background: #2f4f4f;
@@ -153,31 +184,31 @@ main {
     display: block;
 }
 
-/* CAMPOS EDITÁVEIS */
-.editable {
+/* EDITOR RICO */
+.editor {
     width: 100%;
-    min-height: 120px;
+    min-height: 140px;
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #cbd5e1;
     font-family: 'Poppins', sans-serif;
     font-size: 15px;
-    resize: vertical;
     box-sizing: border-box;
     background: #f8fafc;
 }
 
-.editable:focus {
+.editor:focus {
     outline: 2px solid #3b5f5f;
     background: #ffffff;
 }
 
-/* IMPRESSÃO */
+/* IMPRESSÃO DA PÁGINA PRINCIPAL (opcional) */
 @media print {
     #login-overlay,
     nav,
     .btn-print,
-    .btn-foto {
+    .btn-foto,
+    .toolbar {
         display: none;
     }
     main {
